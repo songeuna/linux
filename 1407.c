@@ -31,5 +31,5 @@ void main()
 	
 	j = f(&x, &time);
 
-	printf("f(%d) = %d \n2^%d = %d\n",n,time,time,j);
+	printf("f(%d) = %d \n",n,j);
 }
