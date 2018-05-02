@@ -1,20 +1,22 @@
 #include<stdio.h>
-#include<math.h>
 
 int f(int x)
 {
 	int time=0;
 	int sqr = 1;
 
-	while((x)%2 != 1)
+	while(x%2 != 1)
 	{
-		x = x/2;
+		x = x>>1;
+		//x = x/2; 		//나눗셈 -> 시프트 연산자 사용
 		time++;
 	}
 	
 	for(int i=0; i < time; i++)
-		sqr = sqr * 2;
-
+		sqr = sqr << 1;
+		//sqr = sqr * 2;	//곱셈 -> 시프트 연산자 사용
+		
+	//printf("%d  ",sqr);
 	return sqr;
 }
 
@@ -37,9 +39,10 @@ void main()
 	else{
 		for(int i = a; i <= b; i++)
 			sum = sum + f(i);
+
 	}
 
-	printf("%d\n",sum);
+	printf(" = %d\n",sum);
 }
 
 
