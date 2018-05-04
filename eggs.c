@@ -8,11 +8,12 @@
 
 int main(void)
 {
-	char temp[10];
-	char rbuf[10];
+	char temp[100];
+	char rbuf[100];
 	int fd;
 	int wcount;
 	int rcount;
+	off_f offset;
 
 	fd = open("./test.txt", O_RDWR | O_CREAT | O_TRUNC, \
 		S_IRWXU | S_IWGRP | S_IRGRP | S_IROTH);
@@ -22,16 +23,17 @@ int main(void)
 		return -1; //비정상적인 종료
 	}
 	
-	sprintf(temp,"test\n");		//문자열 copy
+	sprintf(temp,"Do not count the before they hatch.");
 	
-	write(1,temp,strlen(temp));	//temp를 stdout으로 출력
+	wcount = write(fd,temp,strlen(temp));	
+	//printf("wcount = %d\n",wcount);		
 	
-	wcount = write(fd,temp,strlen(temp));	//text.txt파일에 문자열 쓰기
-	printf("wcount = %d\n",wcount);		//파일에 쓴 문자열 갯수 출력
 	
-	lseek(fd, 0, SEEK_SET);			//lseek로 파일 포인터(파일오프셋)을 파일의 시작(SEEK_SET으로이동) 책 152p 참고
-	
+	lseek(fd, 0, SEEK_SET);			
 	rcount = read(fd,rbuf,BUF_SIZE);	//파일 읽기 -> rbuf배열에 채움
+	
+		
+	
 	printf("rcount = %d\n",rcount);		//읽은 문자열 갯수 출력
 
 	printf("rbuf = %s",rbuf);
