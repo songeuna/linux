@@ -4,16 +4,18 @@
 #include<unistd.h>
 #include<stdio.h>
 #include<string.h>
-#define BUF_SIZE 10
+#define BUF_SIZE 100
 
 int main(void)
 {
 	char temp[100];
 	char rbuf[100];
+	char pbuf[100];
+	char strBuffer[100]={"eggs"};
 	int fd;
 	int wcount;
 	int rcount;
-	off_f offset;
+	//off_f offset;
 
 	fd = open("./test.txt", O_RDWR | O_CREAT | O_TRUNC, \
 		S_IRWXU | S_IWGRP | S_IRGRP | S_IROTH);
@@ -29,15 +31,26 @@ int main(void)
 	//printf("wcount = %d\n",wcount);		
 	
 	
-	lseek(fd, 0, SEEK_SET);			
-	rcount = read(fd,rbuf,BUF_SIZE);	//파일 읽기 -> rbuf배열에 채움
-	
-		
-	
-	printf("rcount = %d\n",rcount);		//읽은 문자열 갯수 출력
+	lseek(fd, 0, SEEK_SET);		
+	//rcount = read(fd,rbuf,BUF_SIZE);	//파일 읽기 -> rbuf배열에 채움
+	rcount = read(fd,rbuf,17);
+	rbuf[rcount]='\0';
+	sprintf(pbuf,"%s", rbuf);
 
-	printf("rbuf = %s",rbuf);
-	printf("fd = %d\n",fd); //3, 0은 stdin, 1은 stdout, 2는 stderr 를 무조건 받음 따라서 fd값은 최소가 3부터
+	rcount = read(fd, strBuffer,BUF_SIZE);
+	strBuffer[rcount]='\0';
+	
+	strcat(pbuf, "eggs ");
+	strcat(pbuf, strBuffer);
+	
+	printf("%s\n",pbuf);
+
+//	printf("%s\n",strBuffer);
+//	printf("rcount = %d\n",rcount);		//읽은 문자열 갯수 출력
+	
+	wcount = write(fd, pbuf, strlen(pbuf));
+//	printf("pbuf = %s\n",pbuf);
+//	printf("fd = %d\n",fd); //3, 0은 stdin, 1은 stdout, 2는 stderr 를 무조건 받음 따라서 fd값은 최소가 3부터
 
 	close(fd);
 	/*
