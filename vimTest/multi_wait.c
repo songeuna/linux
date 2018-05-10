@@ -37,7 +37,8 @@ main(int argc, char *argv[])
                     "seconds\n", currTime("%T"), j, (long) getpid(),
                     argv[j]);
 
-            sleep(getInt(argv[j], GN_NONNEG, "sleep-time"));//
+            sleep(getInt(argv[j], GN_NONNEG, "sleep-time")); //getInt => tlpi_hdr.h 파일에 선언, arg가 가르키는 문자열을 각각 int, long으로 변환
+																														 //getInt(const char *arg, int flags, const char *name);
             
 						_exit(EXIT_SUCCESS);
 
@@ -46,19 +47,27 @@ main(int argc, char *argv[])
         }
     }
 
-    numDead = 0;
-    for (;;) {                      /* Parent waits for each child to exit */
+    numDead = 0; //죽은 자식프로세서 갯수
+    
+		for (;;) {                      /* Parent waits for each child to exit */
         childPid = wait(NULL);
-        if (childPid == -1) {
-            if (errno == ECHILD) {
-                printf("No more children - bye!\n");
-                exit(EXIT_SUCCESS);
-            } else {                /* Some other (unexpected) error */
-                errExit("wait");
-            }
+        
+				if (childPid == -1) { //기다릴 자식 프로세서가 없으면
+
+								if (errno == ECHILD) 
+								{
+												printf("No more children - bye!\n");
+												exit(EXIT_SUCCESS);
+            		} 
+						
+								else
+								{                /* Some other (unexpected) error */
+												errExit("wait");
+            		}
         }
 
         numDead++;
+
         printf("[%s] wait() returned child PID %ld (numDead=%d)\n",
                 currTime("%T"), (long) childPid, numDead);
     }
