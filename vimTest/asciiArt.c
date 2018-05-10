@@ -13,9 +13,9 @@ typedef struct _BITMAPFILEHEADER     // BMP 비트맵 파일 헤더 구조체
     unsigned int   bfOffBits;        // 비트맵 데이터의 시작 위치
 } BITMAPFILEHEADER;
 
-typedef struct _BITMAPINFOHEADER     // BMP 비트맵 정보 헤더 구조체(DIB 헤더)
+typedef struct _BITMAPINFOHEADER     // BMP 비트맵 정보 헤더 구조체(DIB 헤더) //비트맵 파일에서 각 정보는 위치와 크기가 정확하게 정해져 있으므로 반드시 구조체의 크기와 형태 그대로 읽어야
 {
-    unsigned int   biSize;           // 현재 구조체의 크기
+    unsigned int   biSize;           // 현재 구조체의 크기	
     int            biWidth;          // 비트맵 이미지의 가로 크기
     int            biHeight;         // 비트맵 이미지의 세로 크기
     unsigned short biPlanes;         // 사용하는 색상판의 수
@@ -45,7 +45,7 @@ int main()
     FILE *fpBmp;                    // 비트맵 파일 포인터
     FILE *fpTxt;                    // 텍스트 파일 포인터
     BITMAPFILEHEADER  fileHeader;    // 비트맵 파일 헤더 구조체 변수
-    BITMAPINFOHEADER infoHeader;    // 비트맵 정보 헤더 구조체 변수
+    BITMAPINFOHEADER infoHeader;    // 비트맵 정보 헤더 구조체 변수함
 
     unsigned char *image;    // 픽셀 데이터 포인터
     int size;                // 픽셀 데이터 크기
@@ -56,7 +56,7 @@ int main()
     char ascii[] = { '#', '#', '@', '%', '=', '+', '*', ':', '-', '.', ' ' };   // 11개
 	
 		// STEP 1. 비트맵 파일열기
-    fpBmp = fopen("lena.bmp", "rb");    // 비트맵 파일을 바이너리 모드로 열기
+    fpBmp = fopen("lena.bmp", "rb");    // 비트맵 파일을 바이너리 모드로 열기 // 바이너리 모드 : 컴퓨터 내의 2진법으 기존적인 연산이 수행되는 경우의 연
     if (fpBmp == NULL)    // 파일 열기에 실패하면
         return 0;         // 프로그램 종료
 
